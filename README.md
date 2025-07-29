@@ -1,4 +1,4 @@
-# Grinex Rate Service
+# Garantex Rate Service
 
 gRPC сервис для получения курса USDT с биржи Grinex. Сервис предоставляет API для получения актуальных курсов валют и сохраняет историю курсов в PostgreSQL базе данных.
 
@@ -15,7 +15,7 @@ gRPC сервис для получения курса USDT с биржи Grinex
 
 ## Технологии
 
-- **Go 1.22+**
+- **Go 1.24+**
 - **gRPC** - для API
 - **PostgreSQL** - для хранения данных
 - **Zap** - для логирования
@@ -27,7 +27,7 @@ gRPC сервис для получения курса USDT с биржи Grinex
 
 ### Требования
 
-- Go 1.22 или выше
+- Go 1.24 или выше
 - Docker и Docker Compose
 - PostgreSQL (если запуск без Docker)
 
@@ -44,31 +44,21 @@ cd grinex-rate-service
 make run-docker
 ```
 
-Сервис будет доступен на порту 8080, а PostgreSQL на порту 5432.
+Сервис будет доступен на порту 8080, а PostgreSQL на порту 5460.
 
 ### Запуск локально
 
-1. Установите зависимости:
+1. Запустите PostgreSQL:
 ```bash
 make deps
 ```
 
-2. Запустите PostgreSQL (или используйте Docker):
-```bash
-docker run -d --name postgres \
-  -e POSTGRES_DB=grinex_rates \
-  -e POSTGRES_USER=postgres \
-  -e POSTGRES_PASSWORD=password \
-  -p 5432:5432 \
-  postgres:15-alpine
-```
-
-3. Примените миграции:
+2. Примените миграции:
 ```bash
 make migrate-up
 ```
 
-4. Запустите сервис:
+3. Запустите сервис:
 ```bash
 make run
 ```
@@ -79,19 +69,19 @@ make run
 
 ### Переменные окружения
 
-| Переменная | Описание | Значение по умолчанию |
-|------------|----------|----------------------|
-| `SERVER_PORT` | Порт gRPC сервера | `8080` |
-| `DB_HOST` | Хост PostgreSQL | `localhost` |
-| `DB_PORT` | Порт PostgreSQL | `5432` |
-| `DB_USER` | Пользователь PostgreSQL | `postgres` |
-| `DB_PASSWORD` | Пароль PostgreSQL | `password` |
-| `DB_NAME` | Имя базы данных | `grinex_rates` |
-| `DB_SSLMODE` | SSL режим PostgreSQL | `disable` |
-| `GRINEX_BASE_URL` | Базовый URL API Grinex | `https://grinex.io` |
-| `GRINEX_TIMEOUT` | Таймаут запросов к API | `30s` |
+| Переменная | Описание | Значение по умолчанию   |
+|------------|----------|-------------------------|
+| `SERVER_PORT` | Порт gRPC сервера | `8080`                  |
+| `DB_HOST` | Хост PostgreSQL | `localhost`             |
+| `DB_PORT` | Порт PostgreSQL | `5460`                  |
+| `DB_USER` | Пользователь PostgreSQL | `db_admin`              |
+| `DB_PASSWORD` | Пароль PostgreSQL | `3Qv@e8U0ImT`              |
+| `DB_NAME` | Имя базы данных | `grinex_rates`          |
+| `DB_SSLMODE` | SSL режим PostgreSQL | `disable`               |
+| `GRINEX_BASE_URL` | Базовый URL API Grinex | `https://grinex.io`     |
+| `GRINEX_TIMEOUT` | Таймаут запросов к API | `30s`                   |
 | `GRINEX_USER_AGENT` | User-Agent для запросов | `GrinexRateService/1.0` |
-| `LOG_LEVEL` | Уровень логирования | `info` |
+| `LOG_LEVEL` | Уровень логирования | `info`                  |
 
 ### Флаги командной строки
 
@@ -123,10 +113,10 @@ message GetRatesReq {}
 **Response:**
 ```protobuf
 message GetRatesResp {
-  string trading_pair = 1;        // "USDT/RUB"
-  double ask_price = 2;           // Цена покупки
-  double bid_price = 3;           // Цена продажи
-  google.protobuf.Timestamp timestamp = 4; // Время получения курса
+  string trading_pair = 1;
+  double ask_price = 2;   
+  double bid_price = 3;   
+  google.protobuf.Timestamp timestamp = 4; 
 }
 ```
 
@@ -143,7 +133,7 @@ message HealthcheckReq {}
 ```protobuf
 message HealthcheckResp {
   string status = 1;   // "healthy", "degraded", "unhealthy"
-  string message = 2;  // Описание статуса
+  string message = 2;  // status description
 }
 ```
 
@@ -263,9 +253,9 @@ docker run -d \
   --name grinex-rate-service \
   -p 8080:8080 \
   -e DB_HOST=postgres \
-  -e DB_PORT=5432 \
-  -e DB_USER=postgres \
-  -e DB_PASSWORD=password \
+  -e DB_PORT=5460 \
+  -e DB_USER=db_admin \
+  -e DB_PASSWORD=3Qv@e8U0ImT \
   -e DB_NAME=grinex_rates \
   grinex-rate-service
 ```

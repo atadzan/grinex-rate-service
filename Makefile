@@ -48,11 +48,11 @@ deps:
 
 # Run database migrations
 migrate-up:
-	migrate -path migrations -database "postgres://postgres:password@localhost:5432/grinex_rates?sslmode=disable" up
+	migrate -path migrations -database "postgres://db_admin:3Qv@e8U0ImT@localhost:5460/grinex_rates?sslmode=disable" up
 
 # Rollback database migrations
 migrate-down:
-	migrate -path migrations -database "postgres://postgres:password@localhost:5432/grinex_rates?sslmode=disable" down
+	migrate -path migrations -database "postgres://db_admin:3Qv@e8U0ImT@localhost:5460/grinex_rates?sslmode=disable" down
 
 # Show help
 help:
@@ -67,6 +67,6 @@ help:
 	@echo "  lint          - Run linter"
 	@echo "  clean         - Clean build artifacts"
 	@echo "  proto         - Generate protobuf files"
-	@echo "  deps          - Install dependencies"
+	@echo "  deps          - Run dependencies"
 	@echo "  migrate-up    - Run database migrations"
 	@echo "  migrate-down  - Rollback database migrations"
