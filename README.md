@@ -31,7 +31,9 @@ gRPC сервис для получения курса USDT с биржи Grinex
 - Docker и Docker Compose
 - PostgreSQL (если запуск без Docker)
 
-### Запуск с Docker Compose
+Сервис будет доступен на порту 8080, а PostgreSQL на порту 5460.
+
+### Запуск локально
 
 1. Клонируйте репозиторий:
 ```bash
@@ -39,26 +41,17 @@ git clone <repository-url>
 cd grinex-rate-service
 ```
 
-2. Запустите сервис с помощью Docker Compose:
-```bash
-make run-docker
-```
-
-Сервис будет доступен на порту 8080, а PostgreSQL на порту 5460.
-
-### Запуск локально
-
-1. Запустите PostgreSQL:
+2. Запустите PostgreSQL:
 ```bash
 make deps
 ```
 
-2. Примените миграции:
+3. Примените миграции:
 ```bash
 make migrate-up
 ```
 
-3. Запустите сервис:
+4. Запустите сервис:
 ```bash
 make run
 ```
