@@ -1,0 +1,16 @@
+services:
+  db:
+    image: postgres:16.1-alpine
+    container_name: grinex_
+    restart: always
+    environment:
+      - POSTGRES_USER=db_admin
+      - POSTGRES_PASSWORD=3Qv@e8U0ImT
+      - POSTGRES_DB=grinex_rates
+    ports:
+      - '5460:5432'
+    volumes:
+      - grinex_db:/var/lib/postgresql/data
+
+volumes:
+  grinex_db:
